@@ -13,7 +13,7 @@ const WaitingRoom = () => {
           Waiting for Opponent
         </h1>
         <h2 className="text-2xl font-bold">Room ID: {roomID}</h2>
-        <div className="grid grid-cols-2 grid-rows-1 gap-16">
+        <div className="w-2/3 flex flex-col gap-8 md:flex-row md:gap-0 md:justify-evenly">
           <Combatant number={1} username={username} />
           <Combatant number={2} username={opponentName} />
         </div>
