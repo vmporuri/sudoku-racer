@@ -1,8 +1,12 @@
-# React + Vite
+# Sudoku Racer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## About
+Looking for a new way to spice up your Sudoku sessions? Check out Sudoku Racer!
+This website lets you challenge your friends to a Sudoku race. Compete
+head-to-head to see who can solve the puzzle the fastest. Plus, you can keep
+track of your wins and losses in your user profile. It's the perfect way to add
+some excitement to your Sudoku routine!
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Technologies Used
+To make this project, we used
+- ReactJS
