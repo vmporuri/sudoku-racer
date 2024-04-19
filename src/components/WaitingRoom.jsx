@@ -11,7 +11,9 @@ const WaitingRoom = () => {
     <>
       <Navbar />
       <div className="h-dvh flex flex-col justify-center items-center gap-16">
-        <h1 className="text-8xl italic font-bold">Waiting for Opponent</h1>
+        <h1 className="text-8xl italic font-bold text-center">
+          Waiting for Opponent
+        </h1>
         <h2 className="text-2xl font-bold">Room ID: {roomID}</h2>
         <div className="grid grid-cols-2 grid-rows-1 gap-16">
           <Combatant number={1} username={username} />
