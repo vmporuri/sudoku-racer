@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import Combatant from "./Combatant";
-import Navbar from "./Navbar";
 
 const WaitingRoom = () => {
   let roomID = 123456;
@@ -9,7 +8,6 @@ const WaitingRoom = () => {
 
   return (
     <>
-      <Navbar />
       <div className="h-dvh flex flex-col justify-center items-center gap-16">
         <h1 className="text-8xl italic font-bold text-center">
           Waiting for Opponent
