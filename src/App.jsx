@@ -6,14 +6,14 @@ import Game from "./components/Game";
 
 function App() {
   return (
-    <>
+    <div className="h-dvh flex flex-col">
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/waiting" element={<WaitingRoom />} />
         <Route path="/game" element={<Game />} />
       </Routes>
-    </>
+    </div>
   );
 }
 

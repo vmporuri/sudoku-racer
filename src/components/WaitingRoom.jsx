@@ -8,7 +8,7 @@ const WaitingRoom = () => {
 
   return (
     <>
-      <div className="h-dvh flex flex-col justify-center items-center gap-16">
+      <div className="grow flex flex-col justify-center items-center gap-16">
         <h1 className="text-8xl italic font-bold text-center">
           Waiting for Opponent
         </h1>
@@ -19,7 +19,7 @@ const WaitingRoom = () => {
         </div>
         <Link
           to="/game"
-          className="w-2/3 py-4 bg-gray-400 font-bold text-xl hover:bg-gray-300 text-center"
+          className="w-2/3 max-w-[900px] py-4 bg-gray-400 font-bold text-xl hover:bg-gray-300 text-center"
         >
           <button>Start</button>
         </Link>
