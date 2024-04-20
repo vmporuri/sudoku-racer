@@ -4,6 +4,7 @@ import WaitingRoom from "./components/WaitingRoom";
 import Navbar from "./components/Navbar";
 import Game from "./components/Game";
 import Profile from "./components/Profile";
+import NotFound from "./components/NotFound";
 
 function App() {
   return (
@@ -13,7 +14,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/waiting" element={<WaitingRoom />} />
         <Route path="/game" element={<Game />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile/:user" element={<Profile />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
   );

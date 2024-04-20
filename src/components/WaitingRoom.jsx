@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import Combatant from "./Combatant";
+import Button from "./Button";
 
 const WaitingRoom = () => {
   let roomID = 123456;
@@ -17,12 +18,11 @@ const WaitingRoom = () => {
           <Combatant number={1} username={username} />
           <Combatant number={2} username={opponentName} />
         </div>
-        <Link
-          to="/game"
-          className="w-2/3 max-w-[900px] py-4 bg-gray-400 font-bold text-xl hover:bg-gray-300 text-center"
-        >
-          <button>Start</button>
-        </Link>
+        <div className="w-2/3 max-w-[900px]">
+          <Link to="/game">
+            <Button className="w-full">Start</Button>
+          </Link>
+        </div>
       </div>
     </>
   );

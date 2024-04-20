@@ -1,4 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
+import Button from "./Button";
 
 const GameOption = ({ type }) => {
   const navigate = useNavigate();
@@ -11,9 +12,7 @@ const GameOption = ({ type }) => {
     if (type == "create") {
       return (
         <Link to="/waiting">
-          <button className="w-[145px] bg-gray-400 text-lg font-semibold italic p-4 hover:bg-gray-300">
-            Create Room
-          </button>
+          <Button className="w-[145px]">Create Room</Button>
         </Link>
       );
     } else if (type == "join") {
