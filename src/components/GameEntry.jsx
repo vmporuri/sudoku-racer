@@ -1,4 +1,5 @@
 import { FaMinusCircle, FaPlusCircle } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 function GameEntry({
   winStatus,
@@ -22,7 +23,13 @@ function GameEntry({
         <div className="flex justify-center">{winIcon(winStatus)}</div>
       </td>
       <td className="py-4 w-[32%] text-xl ">
-        {userName} vs. {opponentName}
+        <Link to={`/profile/${userName}`} className="hover:text-gray-500">
+          {userName}
+        </Link>
+        <span> vs. </span>
+        <Link to={`/profile/${opponentName}`} className="hover:text-gray-500">
+          {opponentName}
+        </Link>
       </td>
       <td className="py-4 w-[20%] text-center text-xl">{difficulty}</td>
       <td className="py-4 w-[20%] text-center text-xl">{time}</td>
