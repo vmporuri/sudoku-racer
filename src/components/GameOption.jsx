@@ -5,7 +5,7 @@ const GameOption = ({ type }) => {
   const navigate = useNavigate();
 
   const goToGame = () => {
-    navigate("/game");
+    navigate("/waiting");
   };
 
   const setButtonType = (type) => {
