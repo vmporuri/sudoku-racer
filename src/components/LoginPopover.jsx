@@ -1,4 +1,9 @@
+import { useContext } from "react";
+import { UsernameContext } from "../App";
+
 function LoginPopover({ hidden, setIsHidden }) {
+  const { userName, setUserName } = useContext(UsernameContext);
+
   if (hidden) {
     return false;
   }
@@ -6,6 +11,7 @@ function LoginPopover({ hidden, setIsHidden }) {
   const submitLoginInfo = (e) => {
     e.preventDefault();
     setIsHidden(true);
+    setUserName(e.target.userName.value);
   };
 
   return (
@@ -13,6 +19,7 @@ function LoginPopover({ hidden, setIsHidden }) {
       <form onSubmit={submitLoginInfo} className="flex flex-col gap-4">
         <input
           type="text"
+          name="userName"
           placeholder="Username"
           className="px-2 border-2 border-black font-normal"
         />
