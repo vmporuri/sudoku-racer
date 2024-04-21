@@ -10,6 +10,8 @@ const Navbar = () => {
 
   const logOut = () => {
     setUserName(null);
+    document.cookie = `name=; SameSite=Strict; path=/`;
+    document.cookie = `isLoggedIn=${false}; SameSite=Strict; path=/`;
     navigate("/");
   };
 

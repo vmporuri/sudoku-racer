@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Home from "./components/Home";
 import WaitingRoom from "./components/WaitingRoom";
@@ -11,6 +11,15 @@ export const UsernameContext = React.createContext();
 
 function App() {
   const [userName, setUserName] = useState(null);
+
+  useEffect(() => {
+    let cookies = Object.fromEntries(
+      document.cookie.split("; ").map((x) => x.split("=")),
+    );
+    if (cookies.isLoggedIn === "true") {
+      setUserName(cookies.name);
+    }
+  }, []);
 
   return (
     <UsernameContext.Provider

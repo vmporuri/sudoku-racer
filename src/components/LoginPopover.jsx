@@ -12,6 +12,8 @@ function LoginPopover({ hidden, setIsHidden }) {
     e.preventDefault();
     setIsHidden(true);
     setUserName(e.target.userName.value);
+    document.cookie = `name=${e.target.userName.value}; SameSite=Strict; path=/`;
+    document.cookie = `isLoggedIn=${true}; SameSite=Strict; path=/`;
   };
 
   return (
