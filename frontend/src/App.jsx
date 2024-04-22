@@ -6,6 +6,7 @@ import Navbar from "./components/Navbar";
 import Game from "./components/Game";
 import Profile from "./components/Profile";
 import NotFound from "./components/NotFound";
+import socket from "./socketConfig";
 
 export const UsernameContext = React.createContext();
 
@@ -19,6 +20,11 @@ function App() {
     if (cookies.isLoggedIn === "true") {
       setUserName(cookies.name);
     }
+
+    // George added the following to test connect to server
+    socket.on('test', msg=>{
+      console.log(msg);
+    })
   }, []);
 
   return (
