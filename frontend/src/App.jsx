@@ -20,11 +20,6 @@ function App() {
     if (cookies.isLoggedIn === "true") {
       setUserName(cookies.name);
     }
-
-    // George added the following to test connect to server
-    socket.on('test', msg=>{
-      console.log(msg);
-    })
   }, []);
 
   return (

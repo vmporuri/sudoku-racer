@@ -1,11 +1,27 @@
 import { Link } from "react-router-dom";
 import Combatant from "./Combatant";
 import Button from "./Button";
+import { useEffect, useState } from "react";
+import { useContext } from "react";
+import { UsernameContext } from "../App";
+import socket from "../socketConfig";
 
 const WaitingRoom = () => {
-  let roomID = 123456;
-  let username = "...";
+  const [ matchState, setMatchState ] = useState({_id: "", isOpen:false, players:[], solution:[], baseBoard:[]});
+  const { userName, setUserName } = useContext(UsernameContext);
   let opponentName = "...";
+
+  useEffect(()=>{
+    socket.emit('create-game', userName);
+    socket.on('update-game', match=>{
+      setMatchState(match);
+    });
+    return ()=>{
+      socket.removeAllListeners();
+    }
+  }, []);
+
+  let roomID = matchState._id;
 
   return (
     <>
@@ -15,7 +31,7 @@ const WaitingRoom = () => {
         </h1>
         <h2 className="text-2xl font-bold">Room ID: {roomID}</h2>
         <div className="w-2/3 flex flex-col gap-8 md:flex-row md:gap-0 md:justify-evenly">
-          <Combatant number={1} username={username} />
+          <Combatant number={1} username={userName} />
           <Combatant number={2} username={opponentName} />
         </div>
         <div className="w-2/3 max-w-[900px]">

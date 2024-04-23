@@ -10,10 +10,12 @@ const GamePlayerSchema = mongoose.Schema({
 
 const MatchSchema = mongoose.Schema({
     solution : [[{type:Number}]], 
+    baseBoard : [[{type:Number}]],
     isOpen : {type:Boolean, default:true},
     isOver : {type:Boolean, default:false},
     players : [GamePlayerSchema], 
-    matchStartTime : {type:Number}
+    matchStartTime : {type:Number},
+    difficulty : {type:String}
 });
 
 module.exports = mongoose.model('SudokuMatch', MatchSchema);
