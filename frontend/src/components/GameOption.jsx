@@ -1,27 +1,47 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Button from "./Button";
+import { useContext, useState } from "react";
+import { UsernameContext } from "../App";
+import socket from "../socketConfig";
 
-const GameOption = ({ type }) => {
+const GameOption = ({type}) => {
   const navigate = useNavigate();
+  const { userName, setUserName } = useContext(UsernameContext);
+  const [ roomIDInput, setRoomIDInput ] = useState("");
 
-  const goToGame = () => {
+  const onIDChange = e => {
+    setRoomIDInput(e.target.value);
+  }
+
+  const createGame = e => {
+    e.preventDefault();
+    socket.emit('create-game', userName);
+    navigate("/waiting");
+  };
+
+  const joinGame = e => {
+    e.preventDefault();
+    socket.emit('join-game', {matchID: roomIDInput, userName});
     navigate("/waiting");
   };
 
   const setButtonType = (type) => {
     if (type == "create") {
       return (
-        <Link to="/waiting">
-          <Button className="w-[145px]">Create Room</Button>
-        </Link>
+        // <Link to="/waiting">
+        //   <Button className="w-[145px]">Create Room</Button>
+        // </Link>
+        <Button className="w-[145px]" onClick={createGame}>Create Room</Button>
       );
     } else if (type == "join") {
       return (
-        <form onSubmit={goToGame}>
+        <form onSubmit={joinGame}>
           <input
             type="text"
             placeholder="123456"
             className="h-[60px] w-[145px] bg-gray-400 font-semibold italic text-lg placeholder-gray-600 text-center"
+            onChange={onIDChange}
+            value={roomIDInput}
           />
         </form>
       );

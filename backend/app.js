@@ -38,5 +38,25 @@ io.on("connect", (socket)=>{
         }catch(e){
             console.log(e)
         }
-    })
+    });
+
+    socket.on('join-game', async ({matchID: _id, username}) => {
+        try{
+            let match = await SudokuMatch.findById(_id);
+            if (match.isOpen) {
+                const gameID = match._id.toString();
+                socket.join(gameID);
+                let player = {
+                    username, 
+                    socketid : socket.id, 
+                    currentBoard : match.baseBoard
+                }
+                match.players.push(player);
+                match = await match.save();
+                io.to(gameID).emit('update-game', match);
+            }
+        }catch(e){
+            console.log(e)
+        }
+    });
 })

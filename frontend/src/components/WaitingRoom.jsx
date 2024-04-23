@@ -9,17 +9,28 @@ import socket from "../socketConfig";
 const WaitingRoom = () => {
   const [ matchState, setMatchState ] = useState({_id: "", isOpen:false, players:[], solution:[], baseBoard:[]});
   const { userName, setUserName } = useContext(UsernameContext);
-  let opponentName = "...";
+  const [ opponentName, setOpponentName] = useState("");
 
   useEffect(()=>{
-    socket.emit('create-game', userName);
     socket.on('update-game', match=>{
       setMatchState(match);
     });
-    return ()=>{
-      socket.removeAllListeners();
-    }
+    // if (matchState.players.length > 1) {
+    //   return ()=>{
+    //     socket.removeAllListeners();
+    //   }
+    // }
   }, []);
+
+  useEffect(()=>{
+    if (matchState.players.length > 1) {
+      if (matchState.players[0].username == userName) {
+        setOpponentName(matchState.players[1].username);
+      } else {
+        setOpponentName(matchState.players[0].username);
+      }
+    }
+  });
 
   let roomID = matchState._id;
 
