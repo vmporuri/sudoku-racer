@@ -22,7 +22,7 @@ io.on("connect", (socket)=>{
         match = await match.save();
         const gameID = match._id.toString();
         io.to(gameID).emit('begin-game', match);
-    })
+    });
 
     socket.on('create-game', async (username) => {
         try{
@@ -60,6 +60,7 @@ io.on("connect", (socket)=>{
                     currentBoard : match.baseBoard
                 }
                 match.players.push(player);
+                match.isOpen = false;
                 match = await match.save();
                 io.to(gameID).emit('update-game', match);
             }

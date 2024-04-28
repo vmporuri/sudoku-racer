@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
 import '../SudokuBoard.css';
 import '../Keypad.css';
 import Sidebar from './Sidebar';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import socket from '../socketConfig';
 
 const findPlayer = players => {
