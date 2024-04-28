@@ -10,29 +10,12 @@ const SudokuBoard = () => {
   const location = useLocation();
 
   useEffect(() => {
-    //   const fetchBoard = async () => {
-    //   try {
-    //     const response = await axios.get("http://sudoku-api.vercel.app/api/dosuku?query={newboard(limit:1){grids{value,solution,difficulty}}}");
-    //     const data = response.data.newboard.grids[0].value;
-    //     const transformedBoard = data.map(row => 
-    //       row.map(cell => cell === null ? [1, 2, 3, 4, 5, 6, 7, 8, 9] : cell)
-    //     );
-    //     setBoard(transformedBoard);
-    //   } catch (error) {
-    //     console.error('Error fetching Sudoku board:', error);
-    //   }
-    // };
-
-    // fetchBoard();
-
     const matchState = location.state.match;
-    console.log(matchState);
     const data = [...matchState.baseBoard];
     const transformedBoard = data.map(row => 
       row.map(cell => cell === null ? [1, 2, 3, 4, 5, 6, 7, 8, 9] : cell)
     );
     setBoard(transformedBoard);
-    console.log(transformedBoard);
   }, []);
 
   const handleNumberSelect = (number) => {
