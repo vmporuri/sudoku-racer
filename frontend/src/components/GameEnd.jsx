@@ -1,9 +1,9 @@
-import { useState } from "react";
 import Button from "./Button";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const GameEnd = () => {
-  const [wonGame, setWonGame] = useState(null);
+  const location = useLocation();
+  const wonGame = location.state.wonGame;
 
   return (
     <div className="w-dvw grow flex flex-col justify-center items-center gap-16">
