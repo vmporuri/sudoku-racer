@@ -31,7 +31,11 @@ const SudokuCell = ({
             console.log(canChange);
           }}
           maxLength="1"
-          className="h-16 w-16 border-2 border-black p-6 text-center text-xl"
+          className={`h-16 w-16 border-2 border-black text-center text-xl 
+                      ${rowIndex % 3 === 0 ? "border-t-2" : "border-t"}
+                      ${colIndex % 3 === 0 ? "border-l-2" : "border-l"}
+                      ${rowIndex === 8 ? "border-b-2" : "border-b"}
+                      ${colIndex === 8 ? "border-r-2" : "border-r"}`}
         />
       );
     } else {

@@ -16,7 +16,7 @@ const Sudoku = () => {
   const [sudokuMatrix, setSudokuMatrix] = useState(initialSudokuMatrix);
 
   return (
-    <form className="grid grid-cols-9 place-content-center">
+    <form className="grid grid-cols-9 place-content-center border-2 border-black">
       {sudokuMatrix.map((row, rowIndex) =>
         row.map((value, colIndex) => (
           <SudokuCell
