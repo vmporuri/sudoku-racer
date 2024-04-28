@@ -38,7 +38,6 @@ const WaitingRoom = () => {
           <Combatant number={1} username={userName} />
           <Combatant number={2} username={opponentName} />
         </div>
-
         {pageTitle=="Please Start the Match" && 
           <div className="w-2/3 max-w-[900px]">
             <Link to={`/game/${matchState._id}`}>
