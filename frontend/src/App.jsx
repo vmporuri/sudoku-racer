@@ -8,6 +8,7 @@ import Profile from "./components/Profile";
 import NotFound from "./components/NotFound";
 import socket from "./socketConfig";
 import SudokuBoard from "./components/SudokuBoard";
+import GameEnd from "./components/GameEnd";
 
 export const UsernameContext = React.createContext();
 
@@ -34,6 +35,7 @@ function App() {
           <Route path="/waiting" element={<WaitingRoom />} />
           <Route path="/play" element={<Game />} />
           <Route path="/game/:id" element={<SudokuBoard />} />
+          <Route path="/results" element={<GameEnd />} />
           <Route path="/profile/:user" element={<Profile />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
