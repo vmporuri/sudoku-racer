@@ -40,7 +40,7 @@ const WaitingRoom = () => {
         </div>
         {pageTitle=="Please Start the Match" && 
           <div className="w-2/3 max-w-[900px]">
-            <Link to={`/game/${matchState._id}`}>
+            <Link to={`/game/${matchState._id}`} state={{match:matchState}}>
               <Button className="w-full">Start</Button>
             </Link>
           </div>

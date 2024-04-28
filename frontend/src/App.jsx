@@ -32,8 +32,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/waiting" element={<WaitingRoom />} />
-          <Route path="/play" element={<SudokuBoard />} />
-          <Route path="/game/:id" element={<Game />} />
+          <Route path="/play" element={<Game />} />
+          <Route path="/game/:id" element={<SudokuBoard />} />
           <Route path="/profile/:user" element={<Profile />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
