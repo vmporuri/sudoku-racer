@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../SudokuBoard.css';
 import '../Keypad.css';
+import Sidebar from './Sidebar';
+import ProgressBar from './ProgressBar';
 
 const SudokuBoard = () => {
   const [board, setBoard] = useState(Array(9).fill().map(() => Array(9).fill(0)));
@@ -57,23 +59,7 @@ const SudokuBoard = () => {
   return (
     <div class="page-container">
         <div class='side-compartment'>
-            <h2>Rules:</h2>
-            <p>
-                A Sudoku match is played on a 9 by 9 grid composed of 9 different 3 by 3 regions. The goal of the game
-                is to place a number from 1 to 9 in each cell in the grid such that the following 3 conditions are met:
-            </p>
-            <ol>
-                <li> 1. Each 3 by 3 region contains all digits from 1 to 9</li>
-                <li> 2. Each column in the 9 by 9 grid contains all digits from 1 to 9</li>
-                <li> 3. Each row in the 9 by 9 grid contains all digits from 1 to 9</li>
-            </ol>
-            <h2>Tips/Shortcuts:</h2>
-            <ul>
-                <li> • Use Candidate mode to take notes on what values could go in each cell.</li>
-                <li> • Your number keys on your keyboard can also be used to place digits.</li>
-                <li> • The “S” key will submit your answer.</li>
-                <li> • The Backspace and the Zero key will delete the contents of a cell.</li>
-            </ul>
+        <Sidebar />
         </div>
 
         <div class="middle-position">
@@ -84,8 +70,8 @@ const SudokuBoard = () => {
                     <div className={`sudoku-cell ${((rowIndex + 1) % 3===0) && (rowIndex + 1 < 9) ? 'bottom-border' : ''
                         } ${((colIndex + 1) % 3===0) && (colIndex + 1 < 9) ? 'right-border' : '' }`} key={colIndex}>
                         {cell === 0 ? (
-                        <input className="sudoku-input" type="text" maxLength="1" pattern="[1-9]*" onChange={(e)=>
-                        handleInputChange(rowIndex, colIndex, e.target.value)}
+                        <input className="sudoku-input" type="text" maxLength="1" pattern="[1-9]{1}" onChange={(e)=>
+                        handleInputChange(rowIndex, colIndex, e.target.value)} 
                         />
                         ) : (
                         cell
