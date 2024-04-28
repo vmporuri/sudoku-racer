@@ -1,6 +1,6 @@
 const Sidebar = () => {
   return (
-    <div className="w-1/5 mx-16 flex flex-col justify-center gap-8">
+    <div className="lg:w-[300px] mx-16 flex flex-col gap-8">
       <div>
         <h2 className="font-bold text-xl">Rules:</h2>
         <div className="text-lg">
