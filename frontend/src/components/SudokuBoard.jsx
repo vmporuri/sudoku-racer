@@ -5,10 +5,6 @@ import Sidebar from './Sidebar';
 import { useLocation } from 'react-router-dom';
 import socket from '../socketConfig';
 
-const findPlayer = players => {
-  return players.find(player => player.socketid === socket.id);
-}
-
 const SudokuBoard = () => {
   const [board, setBoard] = useState(Array(9).fill().map(() => Array(9).fill(0)));
   const [solution, setSolution] = useState(Array(9).fill().map(() => Array(9).fill(0)));
@@ -23,6 +19,11 @@ const SudokuBoard = () => {
     setBoard(transformedBoard);
     const sol = [...matchState.solution];
     setSolution(sol);
+    socket.on('match-ended', match=> {
+      socket.emit('profile-update', match._id);
+      //navigate(to_end_screen);
+      // socket.removeAllListeners(); probably dont need this, but might
+    })
   }, []);
 
   const handleNumberSelect = (number) => {
@@ -55,6 +56,25 @@ const SudokuBoard = () => {
 
     setBoard(updatedBoard);
   };
+
+  const onSubmit = e => {
+    e.preventDefault();
+    let isSolution = true;
+    for (var row = 0; row < 9; row++) {
+      for (var col = 0; col < 9; col++) {
+        if (board[row][col] != solution[row][col]) {
+          isSolution = false;
+          break;
+        }
+      }
+      if (isSolution == false) {
+        break;
+      }
+    }
+    if (isSolution) {
+      socket.emit("sudoku-finish", {matchID: location.state.match._id, socketID: socket.id});
+    }
+  }
 
   return (
     <div class="page-container">
@@ -102,7 +122,7 @@ const SudokuBoard = () => {
                     <button class="mode-button normal">Normal</button>
                     <button class="mode-button candidate">Candidate</button>
                 </div>
-                <button class="submit-button">SUBMIT</button>
+                <button class="submit-button" onClick={onSubmit}>SUBMIT</button>
             </div>
         </div>
     </div>

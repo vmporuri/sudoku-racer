@@ -15,7 +15,8 @@ const MatchSchema = mongoose.Schema({
     isOver : {type:Boolean, default:false},
     players : [GamePlayerSchema], 
     matchStartTime : {type:Number},
-    difficulty : {type:String}
+    difficulty : {type:String}, 
+    winnerPlayerIDX : {type:Number, default:-1}
 });
 
 module.exports = mongoose.model('SudokuMatch', MatchSchema);

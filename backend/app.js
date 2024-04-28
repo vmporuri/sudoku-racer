@@ -16,6 +16,25 @@ const SudokuAPI = require("./SudokuAPI.js");
 mongoose.connect('mongodb://0.0.0.0:27017/sudoku-racer');
 
 io.on("connect", (socket)=>{
+    socket.on('profile-update', async ({matchID: _id, socketID: socketid}) => {
+        let match = await SudokuMatch.findById(_id);
+        console.log(match.winnerPlayerIDX);
+    });
+    socket.on('sudoku-finish', async ({matchID: _id, socketID: socketid}) => {
+        let match = await SudokuMatch.findById(_id);
+        if (match.isOver == false) {
+            match.isOver = true;
+            if (match.players[0].socketid == socketid) {
+                match.winnerPlayerIDX = 0;
+            } else {
+                match.winnerPlayerIDX = 1;
+            }
+            match = await match.save();
+            const gameID = match._id.toString();
+            io.to(gameID).emit('match-ended', match);
+        }
+    });
+
     socket.on('start-game', async (_id) => {
         let match = await SudokuMatch.findById(_id);
         match.startTime = new Date().getTime();
