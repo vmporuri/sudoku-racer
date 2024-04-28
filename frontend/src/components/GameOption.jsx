@@ -21,7 +21,7 @@ const GameOption = ({type}) => {
 
   const joinGame = e => {
     e.preventDefault();
-    socket.emit('join-game', {matchID: roomIDInput, userName});
+    socket.emit('join-game', {matchID: roomIDInput, username: userName});
     navigate("/waiting");
   };
 

@@ -40,7 +40,7 @@ io.on("connect", (socket)=>{
         }
     });
 
-    socket.on('join-game', async ({matchID: _id, username}) => {
+    socket.on('join-game', async ({matchID: _id, username: username}) => {
         try{
             let match = await SudokuMatch.findById(_id);
             if (match.isOpen) {
