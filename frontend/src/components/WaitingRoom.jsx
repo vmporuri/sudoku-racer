@@ -46,7 +46,7 @@ const WaitingRoom = () => {
           <Combatant number={2} username={opponentName} />
         </div>
         <div className="w-2/3 max-w-[900px]">
-          <Link to={`/game/${roomID}`}>
+          <Link to={`/play/${roomID}`}>
             <Button className="w-full">Start</Button>
           </Link>
         </div>
