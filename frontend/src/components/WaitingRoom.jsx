@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Combatant from "./Combatant";
 import Button from "./Button";
 import { useEffect, useState } from "react";
@@ -10,7 +10,8 @@ const WaitingRoom = () => {
   const [ matchState, setMatchState ] = useState({_id: "", isOpen:false, players:[], solution:[], baseBoard:[]});
   const { userName, setUserName } = useContext(UsernameContext);
   const [ opponentName, setOpponentName] = useState("...");
-  const [ pageTitle, setPageTitle] = useState("Waiting for Opponent")
+  const [ pageTitle, setPageTitle] = useState("Waiting for Opponent");
+  const navigate = useNavigate();
 
   useEffect(()=>{
     socket.on('update-game', match=>{
@@ -25,7 +26,17 @@ const WaitingRoom = () => {
         }
       } 
     });
+    socket.on('begin-game', match=> {
+      setMatchState(match);
+      navigate(`/game/${match._id}`, {state:{match:match}});
+    })
   }, []);
+
+  const startGame = e => {
+    e.preventDefault();
+    socket.emit('start-game', matchState._id);
+    console.log("started game!")
+  }
 
   return (
     <>
@@ -40,9 +51,10 @@ const WaitingRoom = () => {
         </div>
         {pageTitle=="Please Start the Match" && 
           <div className="w-2/3 max-w-[900px]">
-            <Link to={`/game/${matchState._id}`} state={{match:matchState}}>
+            {/* <Link to={`/game/${matchState._id}`} state={{match:matchState}} onClick={startGameSig}>
               <Button className="w-full">Start</Button>
-            </Link>
+            </Link> */}
+            <Button className="w-full" onClick={startGame}>Start</Button>
           </div>
         }
       </div>

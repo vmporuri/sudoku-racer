@@ -3,10 +3,16 @@ import axios from 'axios';
 import '../SudokuBoard.css';
 import '../Keypad.css';
 import Sidebar from './Sidebar';
-import { useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import socket from '../socketConfig';
+
+const findPlayer = players => {
+  return players.find(player => player.socketid === socket.id);
+}
 
 const SudokuBoard = () => {
   const [board, setBoard] = useState(Array(9).fill().map(() => Array(9).fill(0)));
+  const [solution, setSolution] = useState(Array(9).fill().map(() => Array(9).fill(0)));
   const location = useLocation();
 
   useEffect(() => {
@@ -16,6 +22,8 @@ const SudokuBoard = () => {
       row.map(cell => cell === null ? [1, 2, 3, 4, 5, 6, 7, 8, 9] : cell)
     );
     setBoard(transformedBoard);
+    const sol = [...matchState.solution];
+    setSolution(sol);
   }, []);
 
   const handleNumberSelect = (number) => {
