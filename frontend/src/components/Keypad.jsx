@@ -1,6 +1,6 @@
 import Button from "./Button";
 
-const Keypad = () => {
+const Keypad = ({validateSolution}) => {
   return (
     <div className="hidden lg:block w-1/3 mx-8">
       <h2 className="text-center text-xl italic font-bold my-2">Keypad</h2>
@@ -20,7 +20,7 @@ const Keypad = () => {
         <Button>Normal</Button>
         <Button>Candidate</Button>
       </div>
-      <Button className="w-full mt-4 bg-sky-600">SUBMIT</Button>
+      <Button className="w-full mt-4 bg-sky-600" onClick={validateSolution}>SUBMIT</Button>
     </div>
   );
 };
