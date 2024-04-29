@@ -24,7 +24,7 @@ const SudokuCell = ({
     const newSudokuMatrix = [...sudokuMatrix];
     newSudokuMatrix[rowIndex][colIndex] = parseInt(val);
     setSudokuMatrix(newSudokuMatrix);
-    console.log(newSudokuMatrix);
+    // console.log(newSudokuMatrix);
   };
 
   const createCell = () => {
@@ -41,7 +41,7 @@ const SudokuCell = ({
     } else {
       return (
         <div
-          className={`flex items-center justify-center h-16 w-16 border-2 border-black
+          className={`flex items-center justify-center h-16 w-16 border-2 border-gray-300
                       text-center text-xl bg-gray-200 ${borderStyle}`}
         >
           {cellValue}

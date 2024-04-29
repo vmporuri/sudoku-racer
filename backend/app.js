@@ -18,7 +18,7 @@ mongoose.connect('mongodb://0.0.0.0:27017/sudoku-racer');
 io.on("connect", (socket)=>{
     socket.on('profile-update', async ({matchID: _id, socketID: socketid}) => {
         let match = await SudokuMatch.findById(_id);
-        console.log(match.winnerPlayerIDX);
+        console.log(match);
     });
     socket.on('sudoku-finish', async ({matchID: _id, socketID: socketid}) => {
         let match = await SudokuMatch.findById(_id);

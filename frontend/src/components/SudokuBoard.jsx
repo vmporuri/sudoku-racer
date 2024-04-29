@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "./Sidebar";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import socket from "../socketConfig";
 import Keypad from "./Keypad";
 import Sudoku from "./Sudoku";
@@ -8,6 +8,7 @@ import ProgressBar from "./ProgressBar";
 
 const SudokuBoard = () => {
   const location = useLocation();
+  // const navigate = useNavigate();
   const matchState = location.state.match;
   const data = [...matchState.baseBoard];
   const [board, setBoard] = useState([...matchState.baseBoard]);
@@ -28,12 +29,18 @@ const SudokuBoard = () => {
       row.map((cell) => (cell === null ? [1, 2, 3, 4, 5, 6, 7, 8, 9] : cell)),
     );
     setBaseBoard(transformedBaseBoard);
-    console.log(baseBoard);
+    // console.log(baseBoard);
     const sol = [...matchState.solution];
     setSolution(sol);
+    console.log(sol);
     socket.on('match-ended', match=> {
-      socket.emit('profile-update', match._id);
-      //navigate(to_end_screen);
+      socket.emit('profile-update', {matchID: match._id, socketID: socket.id});
+      const navigate = useNavigate();
+      if (match.players[match.winnerPlayerIDX].socketid == socket.id) {
+        navigate("/results", {state:{wonGame:true}});
+      } else {
+        navigate("/results", {state:{wonGame:false}});
+      }
       // socket.removeAllListeners(); probably dont need this, but might
     })
   }, []);
@@ -52,6 +59,7 @@ const SudokuBoard = () => {
         break;
       }
     }
+    console.log(isSolution);
     if (isSolution) {
       socket.emit("sudoku-finish", {matchID: location.state.match._id, socketID: socket.id});
     }
