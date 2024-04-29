@@ -13,13 +13,37 @@ const db = new sqlite.Database(
     if (err) return console.error(err);
   },
 );
+let sql;
 
 app.get("/get-user", (req, res) => {
+  const userName = req.query.userName;
+
+  sql = `SELECT DISTINCT * FROM users WHERE userName = ?`;
   try {
-    console.log(req.query.userName);
-    res.json({
-      status: 200,
-      success: true,
+    db.get(sql, [userName], (err, rows) => {
+      if (err) return res.json({ status: 300, success: false, error: err });
+      console.log("Fetched profile data.");
+
+      return res.json({ status: 200, success: true, profileData: rows });
+    });
+  } catch (error) {
+    return res.json({
+      status: 400,
+      success: false,
+    });
+  }
+});
+
+app.get("/get-games", (req, res) => {
+  const userName = req.query.userName;
+
+  sql = `SELECT DISTINCT * FROM games WHERE player1 = ? OR player2 = ? LIMIT 10;`;
+  try {
+    db.all(sql, [userName, userName], (err, rows) => {
+      if (err) return res.json({ status: 300, success: false, error: err });
+      console.log("Fetched past games.");
+
+      return res.json({ status: 200, success: true, games: rows });
     });
   } catch (error) {
     return res.json({
@@ -30,8 +54,17 @@ app.get("/get-user", (req, res) => {
 });
 
 app.post("/create-user", (req, res) => {
+  const userName = req.query.userName;
+  const currDate = new Date();
+  const date = currDate.toISOString().split("T")[0];
+  sql = `INSERT OR IGNORE INTO users (userName, numWins, numLosses, creationDate)
+         VALUES (?, ?, ?, ?);`;
   try {
-    console.log(req.query.userName);
+    db.run(sql, [userName, 0, 0, date], (err) => {
+      if (err) return res.json({ status: 300, success: false, error: err });
+      console.log("Added user.");
+    });
+
     res.json({
       status: 200,
       success: true,
@@ -49,21 +82,51 @@ const addGame = (matchData) => {
   const player2 = matchData.players[1].username;
   const winnerIdx = matchData.winnerPlayerIDX;
   const winner = matchData.players[winnerIdx].username;
+  const loser = matchData.players[1 - winnerIdx].username;
   const difficulty = matchData.difficulty;
   const currDate = new Date();
   const time = currDate.toLocaleTimeString().split(" ")[0];
   const date = currDate.toISOString().split("T")[0];
 
-  console.log(
-    JSON.stringify({
-      player1: player1,
-      player2: player2,
-      winner: winner,
-      difficulty: difficulty,
-      time: time,
-      date: date,
-    }),
-  );
+  sql = `INSERT INTO games (player1, player2, winner, difficulty, time, date)
+         VALUES (?, ?, ?, ?, ?, ?);`;
+  try {
+    db.run(sql, [player1, player2, winner, difficulty, time, date], (err) => {
+      if (err) return res.json({ status: 300, success: false, error: err });
+      console.log("Successfully added match data to database.");
+    });
+  } catch (error) {
+    return res.json({
+      status: 400,
+      success: false,
+    });
+  }
+
+  sql = `UPDATE users SET numWins = numWins + 1 WHERE userName = ?;`;
+  try {
+    db.run(sql, [winner], (err) => {
+      if (err) return res.json({ status: 300, success: false, error: err });
+      console.log("Successfully added match data to database.");
+    });
+  } catch (error) {
+    return res.json({
+      status: 400,
+      success: false,
+    });
+  }
+
+  sql = `UPDATE users SET numLosses = numLosses + 1 WHERE userName = ?;`;
+  try {
+    db.run(sql, [loser], (err) => {
+      if (err) return res.json({ status: 300, success: false, error: err });
+      console.log("Successfully added match data to database.");
+    });
+  } catch (error) {
+    return res.json({
+      status: 400,
+      success: false,
+    });
+  }
 };
 
 const httpServer = app.listen(3001, () =>
