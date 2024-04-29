@@ -8,7 +8,7 @@ const SudokuCell = ({
   setSudokuMatrix,
   canChange,
 }) => {
-  const [cellValue, setCellValue] = useState(value || "");
+  const [cellValue, setCellValue] = useState(sudokuMatrix[rowIndex][colIndex] || "");
 
   const borderStyle = `${rowIndex % 3 === 0 ? "border-t-2 border-t-black" : "border-t"}
                        ${colIndex % 3 === 0 ? "border-l-2 border-l-black" : "border-l"}
@@ -22,8 +22,9 @@ const SudokuCell = ({
     const val = e.target.value;
     setCellValue(/[1-9]/.test(val) ? val : "");
     const newSudokuMatrix = [...sudokuMatrix];
-    newSudokuMatrix[rowIndex][colIndex] = val;
+    newSudokuMatrix[rowIndex][colIndex] = parseInt(val);
     setSudokuMatrix(newSudokuMatrix);
+    console.log(newSudokuMatrix);
   };
 
   const createCell = () => {

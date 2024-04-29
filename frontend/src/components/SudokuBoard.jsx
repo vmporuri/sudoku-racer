@@ -29,11 +29,15 @@ const SudokuBoard = () => {
   useEffect(() => {
     const matchState = location.state.match;
     const data = [...matchState.baseBoard];
-    setBaseBoard([...matchState.baseBoard]);
+    
     const transformedBoard = data.map((row) =>
       row.map((cell) => (cell === null ? [1, 2, 3, 4, 5, 6, 7, 8, 9] : cell)),
     );
     setBoard(transformedBoard);
+    const transformedBaseBoard = data.map((row) =>
+      row.map((cell) => (cell === null ? [1, 2, 3, 4, 5, 6, 7, 8, 9] : cell)),
+    );
+    setBaseBoard(transformedBaseBoard);
     const sol = [...matchState.solution];
     setSolution(sol);
     socket.on('match-ended', match=> {
