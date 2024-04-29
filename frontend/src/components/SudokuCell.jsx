@@ -10,10 +10,19 @@ const SudokuCell = ({
 }) => {
   const [cellValue, setCellValue] = useState(value || "");
 
+  const borderStyle = `${rowIndex % 3 === 0 ? "border-t-2 border-t-black" : "border-t"}
+                       ${colIndex % 3 === 0 ? "border-l-2 border-l-black" : "border-l"}
+                       ${rowIndex === 8 ? "border-b-2 border-b-black" : "border-b"}
+                       ${colIndex === 8 ? "border-r-2 border-r-black" : "border-r"}`;
+
   const handleChange = (e) => {
-    setCellValue(e.target.value);
+    if (!canChange || !/[1-9]/.test(e.key)) {
+      e.preventDefault();
+    }
+    const val = e.target.value;
+    setCellValue(/[1-9]/.test(val) ? val : "");
     const newSudokuMatrix = [...sudokuMatrix];
-    newSudokuMatrix[rowIndex][colIndex] = cellValue;
+    newSudokuMatrix[rowIndex][colIndex] = val;
     setSudokuMatrix(newSudokuMatrix);
   };
 
@@ -24,23 +33,16 @@ const SudokuCell = ({
           type="text"
           value={cellValue}
           onChange={handleChange}
-          onKeyPress={(event) => {
-            if (!canChange || !/[1-9]/.test(event.key)) {
-              event.preventDefault();
-            }
-            console.log(canChange);
-          }}
           maxLength="1"
-          className={`h-16 w-16 border-2 border-black text-center text-xl 
-                      ${rowIndex % 3 === 0 ? "border-t-2" : "border-t"}
-                      ${colIndex % 3 === 0 ? "border-l-2" : "border-l"}
-                      ${rowIndex === 8 ? "border-b-2" : "border-b"}
-                      ${colIndex === 8 ? "border-r-2" : "border-r"}`}
+          className={`h-16 w-16 border-2 border-gray-300 text-center text-xl ${borderStyle}`}
         />
       );
     } else {
       return (
-        <div className="flex items-center justify-center h-16 w-16 border-2 border-black text-center text-xl bg-gray-200">
+        <div
+          className={`flex items-center justify-center h-16 w-16 border-2 border-black
+                      text-center text-xl bg-gray-200 ${borderStyle}`}
+        >
           {cellValue}
         </div>
       );

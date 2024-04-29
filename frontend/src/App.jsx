@@ -3,12 +3,11 @@ import { Route, Routes } from "react-router-dom";
 import Home from "./components/Home";
 import WaitingRoom from "./components/WaitingRoom";
 import Navbar from "./components/Navbar";
-import Game from "./components/Game";
 import Profile from "./components/Profile";
 import NotFound from "./components/NotFound";
-import socket from "./socketConfig";
 import SudokuBoard from "./components/SudokuBoard";
 import GameEnd from "./components/GameEnd";
+import socket from "./socketConfig";
 
 export const UsernameContext = React.createContext();
 
@@ -33,7 +32,6 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/waiting" element={<WaitingRoom />} />
-          <Route path="/play" element={<Game />} />
           <Route path="/game/:id" element={<SudokuBoard />} />
           <Route path="/results" element={<GameEnd />} />
           <Route path="/profile/:user" element={<Profile />} />
