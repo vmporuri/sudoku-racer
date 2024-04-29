@@ -9,6 +9,7 @@ const Sudoku = ({ startingBoard, board, setBoard }) => {
             key={`${rowIndex}-${colIndex}`}
             rowIndex={rowIndex}
             colIndex={colIndex}
+            value={value}
             sudokuMatrix={board}
             setSudokuMatrix={setBoard}
             canChange={startingBoard[rowIndex][colIndex] === 0}

@@ -7,23 +7,13 @@ import Sudoku from "./Sudoku";
 import ProgressBar from "./ProgressBar";
 
 const SudokuBoard = () => {
-  const [board, setBoard] = useState(
-    Array(9)
-      .fill()
-      .map(() => Array(9).fill(0)),
-  );
-  const [solution, setSolution] = useState(
-    Array(9)
-      .fill()
-      .map(() => Array(9).fill(0)),
-  );
   const location = useLocation();
+  const matchState = location.state.match;
+  const data = [...matchState.baseBoard];
+  const [board, setBoard] = useState([...matchState.baseBoard]);
+  const [solution, setSolution] = useState([...matchState.solution]);
   const [progress, setProgress] = useState(0);
-  const [baseBoard, setBaseBoard] = useState(
-    Array(9)
-      .fill()
-      .map(() => Array(9).fill(0)),
-  );
+  const [baseBoard, setBaseBoard] = useState([...matchState.baseBoard]);
 
   // FIXME: I think some of this logic needs to be updated to work with the new setup.
   useEffect(() => {
@@ -38,6 +28,7 @@ const SudokuBoard = () => {
       row.map((cell) => (cell === null ? [1, 2, 3, 4, 5, 6, 7, 8, 9] : cell)),
     );
     setBaseBoard(transformedBaseBoard);
+    console.log(baseBoard);
     const sol = [...matchState.solution];
     setSolution(sol);
     socket.on('match-ended', match=> {
@@ -77,7 +68,7 @@ const SudokuBoard = () => {
             className="mr-24"
           />
           <Sudoku
-            startingBoard={[...baseBoard]}
+            startingBoard={baseBoard}
             board={board}
             setBoard={setBoard}
           />

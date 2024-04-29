@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const SudokuCell = ({
   rowIndex,
@@ -8,7 +8,7 @@ const SudokuCell = ({
   setSudokuMatrix,
   canChange,
 }) => {
-  const [cellValue, setCellValue] = useState(sudokuMatrix[rowIndex][colIndex] || "");
+  const [cellValue, setCellValue] = useState(value || "");
 
   const borderStyle = `${rowIndex % 3 === 0 ? "border-t-2 border-t-black" : "border-t"}
                        ${colIndex % 3 === 0 ? "border-l-2 border-l-black" : "border-l"}
