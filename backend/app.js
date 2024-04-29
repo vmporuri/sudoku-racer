@@ -29,6 +29,43 @@ app.get("/get-user", (req, res) => {
   }
 });
 
+app.post("/create-user", (req, res) => {
+  try {
+    console.log(req.query.userName);
+    res.json({
+      status: 200,
+      success: true,
+    });
+  } catch (error) {
+    return res.json({
+      status: 400,
+      success: false,
+    });
+  }
+});
+
+const addGame = (matchData) => {
+  const player1 = matchData.players[0].username;
+  const player2 = matchData.players[1].username;
+  const winnerIdx = matchData.winnerPlayerIDX;
+  const winner = matchData.players[winnerIdx].username;
+  const difficulty = matchData.difficulty;
+  const currDate = new Date();
+  const time = currDate.toLocaleTimeString().split(" ")[0];
+  const date = currDate.toISOString().split("T")[0];
+
+  console.log(
+    JSON.stringify({
+      player1: player1,
+      player2: player2,
+      winner: winner,
+      difficulty: difficulty,
+      time: time,
+      date: date,
+    }),
+  );
+};
+
 const httpServer = app.listen(3001, () =>
   console.log("Server listening at port 3001."),
 );
@@ -48,7 +85,7 @@ mongoose.connect("mongodb://0.0.0.0:27017/sudoku-racer");
 io.on("connect", (socket) => {
   socket.on("profile-update", async ({ matchID: _id, socketID: socketid }) => {
     let match = await SudokuMatch.findById(_id);
-    console.log(match);
+    addGame(match);
   });
   socket.on("sudoku-finish", async ({ matchID: _id, socketID: socketid }) => {
     let match = await SudokuMatch.findById(_id);
