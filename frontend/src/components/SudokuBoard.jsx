@@ -8,12 +8,12 @@ import ProgressBar from "./ProgressBar";
 
 const SudokuBoard = () => {
   const location = useLocation();
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const matchState = location.state.match;
   const data = [...matchState.baseBoard];
   const [board, setBoard] = useState([...matchState.baseBoard]);
   const [solution, setSolution] = useState([...matchState.solution]);
-  const [progress, setProgress] = useState(0);
+  const [progress, setProgress] = useState(50);
   const [baseBoard, setBaseBoard] = useState([...matchState.baseBoard]);
 
   // FIXME: I think some of this logic needs to be updated to work with the new setup.
@@ -35,12 +35,12 @@ const SudokuBoard = () => {
     console.log(sol);
     socket.on('match-ended', match=> {
       socket.emit('profile-update', {matchID: match._id, socketID: socket.id});
-      const navigate = useNavigate();
+      // const navigate = useNavigate();
+      var wonGame = false;
       if (match.players[match.winnerPlayerIDX].socketid == socket.id) {
-        navigate("/results", {state:{wonGame:true}});
-      } else {
-        navigate("/results", {state:{wonGame:false}});
-      }
+        wonGame = true;
+      } 
+      navigate("/results", {state:{wonGame:wonGame}});
       // socket.removeAllListeners(); probably dont need this, but might
     })
   }, []);
@@ -71,7 +71,7 @@ const SudokuBoard = () => {
       <div className="flex justify-center items-center">
         <div className="flex flex-col gap-6 justify-center items-center">
           <ProgressBar
-            opponentName={"test"}
+            opponentName={"Opponent"}
             progress={progress}
             className="mr-24"
           />
